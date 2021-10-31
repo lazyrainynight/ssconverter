@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssconverter/shared/menu_bottom.dart';
+// import 'package:ssconverter/shared/menu_bottom.dart';
 // import 'package:ssconverter/shared/menu_drawer.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Center(child: Text(widget.title)),
       ),
       // drawer: const MenuDrawer(),
-      bottomNavigationBar: const MenuBottom(),
+      // bottomNavigationBar: const MenuBottom(),
       body: Container(
         // decoration: const BoxDecoration(
         //   image: DecorationImage(
