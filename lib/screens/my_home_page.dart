@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssconverter/shared/menu_drawer.dart';
+// import 'package:ssconverter/shared/menu_drawer.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Center(child: Text(widget.title)),
       ),
-      drawer: const MenuDrawer(),
+      // drawer: const MenuDrawer(),
       body: Container(
         // decoration: const BoxDecoration(
         //   image: DecorationImage(
