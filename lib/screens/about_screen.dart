@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssconverter/shared/menu_bottom.dart';
 // import 'package:ssconverter/shared/menu_drawer.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -9,6 +10,7 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('SS Converter')),
       // drawer: const MenuDrawer(),
+      bottomNavigationBar: const MenuBottom(),
       body: const Center(child: Text('ABOUT PAGE')),
     );
   }

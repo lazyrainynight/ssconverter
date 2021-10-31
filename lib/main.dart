@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ssconverter/screens/about_screen.dart';
 import 'package:ssconverter/screens/my_home_page.dart';
 
 void main() {
@@ -15,7 +16,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: const MyHomePage(title: 'SS Converter'),
+      routes: {
+        '/': (context) => const MyHomePage(title: 'SS Converter'),
+        '/about': (context) => const AboutScreen(),
+      },
+      initialRoute: '/',
     );
   }
 }
