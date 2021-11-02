@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 class MyConverter extends StatefulWidget {
   const MyConverter({Key? key}) : super(key: key);
@@ -9,12 +10,21 @@ class MyConverter extends StatefulWidget {
 
 class _MyConverterState extends State<MyConverter> {
   String value = '';
-  String base64 = '';
-  String base64WithPadding = '';
-  String urlEncoding = '';
-  String doubleUrlEncoding = '';
+
+  String resultBase64Encoding = '';
+  String resultBase64Decoding = '';
+
+  String resultBase64UrlEncoding = '';
+  String resultBase64UrlDecoding = '';
+
+  String resultUrlEncoding = '';
+  String resultUrlDecoding = '';
+
+  String resultDoubleUrlEncoding = '';
+  String resultDoubleUrlDecoding = '';
+
   final TextEditingController txtValue = TextEditingController();
-  String inputHint = 'Please insert here.';
+  String inputHint = 'PLEASE INSERT';
 
   @override
   Widget build(BuildContext context) {
@@ -27,31 +37,100 @@ class _MyConverterState extends State<MyConverter> {
             decoration: InputDecoration(hintText: inputHint),
             onChanged: (t) {
               setState(() {
-                base64 = t;
-                base64WithPadding = t;
-                urlEncoding = t;
-                doubleUrlEncoding = t;
+                resultBase64Encoding = getBase64Encoding(t);
+                resultBase64Decoding = getBase64Decoding(t);
+                resultBase64UrlEncoding = getBase64UrlEncoding(t);
+                resultBase64UrlDecoding = getBase64UrlDecoding(t);
+                resultUrlEncoding = getUrlEncoding(t);
+                resultUrlDecoding = getUrlDecoding(t);
+                resultDoubleUrlEncoding = getDoubleUrlEncoding(t);
+                resultDoubleUrlDecoding = getDoubleUrlDecoding(t);
               });
             },
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Text('Base64: ' + base64),
+          child: Text('Base64 encoding: ' + resultBase64Encoding),
         ),
         Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Text('Base64 with padding: ' + base64WithPadding),
+          child: Text('Base64 decoding: ' + resultBase64Decoding),
         ),
         Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Text('UrlEncoding: ' + urlEncoding),
+          child: Text('Base64 URL-safe encoding: ' + resultBase64UrlEncoding),
         ),
         Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Text('Double-UrlEncoding: ' + doubleUrlEncoding),
+          child: Text('Base64 URL-safe decoding: ' + resultBase64UrlDecoding),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Text('UrlEncoding: ' + resultUrlEncoding),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Text('UrlDecoding: ' + resultUrlDecoding),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Text('Double-UrlEncoding: ' + resultDoubleUrlEncoding),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Text('Double-UrlDecoding: ' + resultDoubleUrlDecoding),
         ),
       ],
     );
+  }
+
+  String getBase64Encoding(String input) {
+    return base64Encode(utf8.encode(input));
+  }
+
+  String getBase64Decoding(String input) {
+    String source = getInputWithPadding(input);
+
+    try {
+      return utf8.decode(base64Decode(source));
+    } on FormatException {
+      return 'INVALID FORMAT';
+    }
+  }
+
+  String getBase64UrlEncoding(String input) {
+    return base64UrlEncode(utf8.encode(input));
+  }
+
+  String getBase64UrlDecoding(String input) {
+    String source = getInputWithPadding(input);
+
+    try {
+      return utf8.decode(base64Url.decode(source));
+    } on FormatException {
+      return 'INVALID FORMAT';
+    }
+  }
+
+  String getUrlEncoding(String input) {
+    return Uri.encodeFull(input);
+  }
+
+  String getUrlDecoding(String input) {
+    return Uri.decodeFull(input);
+  }
+
+  String getDoubleUrlEncoding(String input) {
+    return Uri.encodeFull(Uri.encodeFull(input));
+  }
+
+  String getDoubleUrlDecoding(String input) {
+    return Uri.decodeFull(Uri.decodeFull(input));
+  }
+
+  String getInputWithPadding(String input) {
+    var source = input + ('=' * ((4 - (input.length % 4)) % 4));
+    return source;
   }
 }
