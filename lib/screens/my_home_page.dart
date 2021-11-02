@@ -17,7 +17,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _convert() {
+  void _incrementCounter() {
     setState(() {
       _counter++;
     });
@@ -40,20 +40,23 @@ class _MyHomePageState extends State<MyHomePage> {
         //   ),
         // ),
         child: Center(
-          child: Column(
-            // Invoke "debug painting" (press "p" in the console, choose the
-            // "Toggle Debug Paint" action from the Flutter Inspector in Android
-            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-            // to see the wireframe for each widget.
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              MyConverter(),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              // Invoke "debug painting" (press "p" in the console, choose the
+              // "Toggle Debug Paint" action from the Flutter Inspector in Android
+              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+              // to see the wireframe for each widget.
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const <Widget>[
+                MyConverter(),
+              ],
+            ),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _convert,
+        onPressed: _incrementCounter,
         tooltip: 'Convert',
         child: const Icon(Icons.add),
       ),

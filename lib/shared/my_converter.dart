@@ -24,17 +24,25 @@ class _MyConverterState extends State<MyConverter> {
   String resultDoubleUrlDecoding = '';
 
   final TextEditingController txtValue = TextEditingController();
-  String inputHint = 'PLEASE INSERT';
+  String inputHint = 'CONVERT THIS';
 
   @override
   Widget build(BuildContext context) {
+    final sizeX = MediaQuery.of(context).size.width;
+    final sizeY = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.all(32.0),
           child: TextField(
             controller: txtValue,
-            decoration: InputDecoration(hintText: inputHint),
+            style: const TextStyle(fontSize: 24),
+            decoration: InputDecoration(
+              hintText: inputHint,
+              filled: true,
+              prefixIcon: const Icon(Icons.search),
+            ),
             onChanged: (t) {
               setState(() {
                 resultBase64Encoding = getBase64Encoding(t);
@@ -49,37 +57,59 @@ class _MyConverterState extends State<MyConverter> {
             },
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Text('Base64 encoding: ' + resultBase64Encoding),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Text('Base64 encoding: ' + resultBase64Encoding),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Text('Base64 decoding: ' + resultBase64Decoding),
+            ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Text('Base64 decoding: ' + resultBase64Decoding),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child:
+                  Text('Base64 URL-safe encoding: ' + resultBase64UrlEncoding),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child:
+                  Text('Base64 URL-safe decoding: ' + resultBase64UrlDecoding),
+            ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Text('Base64 URL-safe encoding: ' + resultBase64UrlEncoding),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Text('UrlEncoding: ' + resultUrlEncoding),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Text('UrlDecoding: ' + resultUrlDecoding),
+            ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Text('Base64 URL-safe decoding: ' + resultBase64UrlDecoding),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Text('UrlEncoding: ' + resultUrlEncoding),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Text('UrlDecoding: ' + resultUrlDecoding),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Text('Double-UrlEncoding: ' + resultDoubleUrlEncoding),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Text('Double-UrlDecoding: ' + resultDoubleUrlDecoding),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Text('Double-UrlEncoding: ' + resultDoubleUrlEncoding),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Text('Double-UrlDecoding: ' + resultDoubleUrlDecoding),
+            ),
+          ],
         ),
       ],
     );

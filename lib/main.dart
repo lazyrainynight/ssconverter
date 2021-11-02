@@ -22,7 +22,29 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'SS Converter',
       theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.amber,
         primarySwatch: Colors.blueGrey,
+        accentColor: Colors.amber,
+        textTheme: const TextTheme(
+          bodyText1: TextStyle(fontSize: 24),
+          bodyText2: TextStyle(fontSize: 22),
+        ),
+        // colorScheme: ColorScheme(
+        //   primary: Colors.blueGrey,
+        //   primaryVariant: Colors.amber,
+        //   secondary: Colors.orange,
+        //   secondaryVariant: Colors.amber,
+        //   surface: Colors.grey,
+        //   background: Colors.grey,
+        //   error: Colors.deepOrange,
+        //   onPrimary: Colors.amber,
+        //   onSecondary: Colors.orange,
+        //   onSurface: Colors.orange,
+        //   onBackground: Colors.white,
+        //   onError: Colors.red,
+        //   brightness: Brightness.dark,
+        // ),
       ),
       routes: {
         '/': (context) => const MyHomePage(title: 'SS Converter'),
