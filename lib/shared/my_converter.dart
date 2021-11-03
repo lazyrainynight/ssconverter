@@ -94,6 +94,7 @@ class _MyConverterState extends State<MyConverter> {
               decoration: InputDecoration(
                 labelText: label,
                 filled: true,
+                fillColor: const Color.fromARGB(255, 72, 72, 72),
                 border: const OutlineInputBorder(),
               ),
               readOnly: true,
@@ -114,6 +115,8 @@ class _MyConverterState extends State<MyConverter> {
 
     try {
       return utf8.decode(base64Decode(source));
+    } on ArgumentError {
+      return invalidInput;
     } on FormatException {
       return invalidInput;
     }
@@ -128,6 +131,8 @@ class _MyConverterState extends State<MyConverter> {
 
     try {
       return utf8.decode(base64Url.decode(source));
+    } on ArgumentError {
+      return invalidInput;
     } on FormatException {
       return invalidInput;
     }
