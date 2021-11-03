@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:convert';
 
 class MyConverter extends StatefulWidget {
@@ -94,7 +95,9 @@ class _MyConverterState extends State<MyConverter> {
     return Row(
       children: [
         OutlinedButton(
-          onPressed: () {},
+          onPressed: error ? null : () {
+            Clipboard.setData(ClipboardData(text: controller.text));
+          },
           style: buttonStyle,
           child: const Icon(Icons.copy),
         ),
@@ -105,6 +108,10 @@ class _MyConverterState extends State<MyConverter> {
             child: TextField(
               maxLines: null,
               decoration: InputDecoration(
+                // icon: IconButton(
+                //   icon: const Icon(Icons.copy),
+                //   onPressed: error ? null : () {},
+                // ),
                 labelText: label,
                 filled: true,
                 fillColor: error
