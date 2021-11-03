@@ -9,109 +9,75 @@ class MyConverter extends StatefulWidget {
 }
 
 class _MyConverterState extends State<MyConverter> {
-  String value = '';
-
-  String resultBase64Encoding = '';
-  String resultBase64Decoding = '';
-
-  String resultBase64UrlEncoding = '';
-  String resultBase64UrlDecoding = '';
-
-  String resultUrlEncoding = '';
-  String resultUrlDecoding = '';
-
-  String resultDoubleUrlEncoding = '';
-  String resultDoubleUrlDecoding = '';
-
   final TextEditingController txtValue = TextEditingController();
+  final TextEditingController base64En = TextEditingController();
+  final TextEditingController base64De = TextEditingController();
+  final TextEditingController base64UrlEn = TextEditingController();
+  final TextEditingController base64UrlDe = TextEditingController();
+  final TextEditingController urlEn = TextEditingController();
+  final TextEditingController urlDe = TextEditingController();
+  final TextEditingController doubleUrlEn = TextEditingController();
+  final TextEditingController doubleUrlDe = TextEditingController();
+
   String inputHint = 'CONVERT THIS';
+  String invalidInput = 'INVALID INPUT';
 
   @override
   Widget build(BuildContext context) {
     final sizeX = MediaQuery.of(context).size.width;
     final sizeY = MediaQuery.of(context).size.height;
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: TextField(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 30),
+      child: Column(
+        children: [
+          TextField(
             controller: txtValue,
-            style: const TextStyle(fontSize: 24),
             decoration: InputDecoration(
-              hintText: inputHint,
-              filled: true,
               prefixIcon: const Icon(Icons.search),
+              labelText: inputHint,
+              filled: true,
+              border: const OutlineInputBorder(),
             ),
             onChanged: (t) {
               setState(() {
-                resultBase64Encoding = getBase64Encoding(t);
-                resultBase64Decoding = getBase64Decoding(t);
-                resultBase64UrlEncoding = getBase64UrlEncoding(t);
-                resultBase64UrlDecoding = getBase64UrlDecoding(t);
-                resultUrlEncoding = getUrlEncoding(t);
-                resultUrlDecoding = getUrlDecoding(t);
-                resultDoubleUrlEncoding = getDoubleUrlEncoding(t);
-                resultDoubleUrlDecoding = getDoubleUrlDecoding(t);
+                base64En.text = getBase64Encoding(t);
+                base64De.text = getBase64Decoding(t);
+                base64UrlEn.text = getBase64UrlEncoding(t);
+                base64UrlDe.text = getBase64UrlDecoding(t);
+                urlEn.text = getUrlEncoding(t);
+                urlDe.text = getUrlDecoding(t);
+                doubleUrlEn.text = getDoubleUrlEncoding(t);
+                doubleUrlDe.text = getDoubleUrlDecoding(t);
               });
             },
           ),
+          const SizedBox(height: 30),
+          getResultTextField('Base64 Encoding', base64En),
+          getResultTextField('Base64 Decoding', base64De),
+          getResultTextField('Base64Url Encoding', base64UrlEn),
+          getResultTextField('Base64Url Decoding', base64UrlDe),
+          getResultTextField('Url Encoding (UTF-8)', urlEn),
+          getResultTextField('Url Decoding (UTF-8)', urlDe),
+          getResultTextField('Double-Url Encoding (UTF-8)', doubleUrlEn),
+          getResultTextField('Double-Url Decoding (UTF-8)', doubleUrlDe),
+        ],
+      ),
+    );
+  }
+
+  Padding getResultTextField(String label, TextEditingController controller) {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: TextField(
+        decoration: InputDecoration(
+          labelText: label,
+          filled: true,
+          border: const OutlineInputBorder(),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Text('Base64 encoding: ' + resultBase64Encoding),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Text('Base64 decoding: ' + resultBase64Decoding),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child:
-                  Text('Base64 URL-safe encoding: ' + resultBase64UrlEncoding),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child:
-                  Text('Base64 URL-safe decoding: ' + resultBase64UrlDecoding),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Text('UrlEncoding: ' + resultUrlEncoding),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Text('UrlDecoding: ' + resultUrlDecoding),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Text('Double-UrlEncoding: ' + resultDoubleUrlEncoding),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Text('Double-UrlDecoding: ' + resultDoubleUrlDecoding),
-            ),
-          ],
-        ),
-      ],
+        readOnly: true,
+        controller: controller,
+      ),
     );
   }
 
@@ -125,7 +91,7 @@ class _MyConverterState extends State<MyConverter> {
     try {
       return utf8.decode(base64Decode(source));
     } on FormatException {
-      return 'INVALID FORMAT';
+      return invalidInput;
     }
   }
 
@@ -139,7 +105,7 @@ class _MyConverterState extends State<MyConverter> {
     try {
       return utf8.decode(base64Url.decode(source));
     } on FormatException {
-      return 'INVALID FORMAT';
+      return invalidInput;
     }
   }
 
@@ -148,7 +114,13 @@ class _MyConverterState extends State<MyConverter> {
   }
 
   String getUrlDecoding(String input) {
-    return Uri.decodeFull(input);
+    try {
+      return Uri.decodeFull(input);
+    } on ArgumentError {
+      return invalidInput;
+    } on FormatException {
+      return invalidInput;
+    }
   }
 
   String getDoubleUrlEncoding(String input) {
@@ -156,11 +128,16 @@ class _MyConverterState extends State<MyConverter> {
   }
 
   String getDoubleUrlDecoding(String input) {
-    return Uri.decodeFull(Uri.decodeFull(input));
+    try {
+      return Uri.decodeFull(Uri.decodeFull(input));
+    } on ArgumentError {
+      return invalidInput;
+    } on FormatException {
+      return invalidInput;
+    }
   }
 
   String getInputWithPadding(String input) {
-    var source = input + ('=' * ((4 - (input.length % 4)) % 4));
-    return source;
+    return input + ('=' * ((4 - (input.length % 4)) % 4));
   }
 }
