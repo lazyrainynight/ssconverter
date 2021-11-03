@@ -55,20 +55,20 @@ class _MyConverterState extends State<MyConverter> {
             },
           ),
           const SizedBox(height: 30),
-          getResultTextField('Base64 Encoding', base64En),
-          getResultTextField('Base64 Decoding', base64De),
-          getResultTextField('Base64Url Encoding', base64UrlEn),
-          getResultTextField('Base64Url Decoding', base64UrlDe),
-          getResultTextField('Url Encoding (UTF-8)', urlEn),
-          getResultTextField('Url Decoding (UTF-8)', urlDe),
-          getResultTextField('Double-Url Encoding (UTF-8)', doubleUrlEn),
-          getResultTextField('Double-Url Decoding (UTF-8)', doubleUrlDe),
+          getResultBox('Base64 Encoding', base64En),
+          getResultBox('Base64 Decoding', base64De),
+          getResultBox('Base64Url Encoding', base64UrlEn),
+          getResultBox('Base64Url Decoding', base64UrlDe),
+          getResultBox('Url Encoding (UTF-8)', urlEn),
+          getResultBox('Url Decoding (UTF-8)', urlDe),
+          getResultBox('Double-Url Encoding (UTF-8)', doubleUrlEn),
+          getResultBox('Double-Url Decoding (UTF-8)', doubleUrlDe),
         ],
       ),
     );
   }
 
-  Widget getResultTextField(String label, TextEditingController controller) {
+  Widget getResultBox(String label, TextEditingController controller) {
     final ButtonStyle buttonStyle = OutlinedButton.styleFrom(
       primary: Colors.amber,
       minimumSize: const Size(100, 55),
