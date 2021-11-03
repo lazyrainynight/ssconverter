@@ -22,17 +22,19 @@ class _MyConverterState extends State<MyConverter> {
   String inputHint = 'CONVERT THIS';
   String invalidInput = 'INVALID INPUT';
 
+  double _sizeX = 500;
+
   @override
   Widget build(BuildContext context) {
-    final sizeX = MediaQuery.of(context).size.width;
-    final sizeY = MediaQuery.of(context).size.height;
+    _sizeX = MediaQuery.of(context).size.width;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 30),
       child: Column(
-        children: [
+        children: <Widget>[
           TextField(
             controller: txtValue,
+            maxLines: null,
             decoration: InputDecoration(
               prefixIcon: const Icon(Icons.search),
               labelText: inputHint,
@@ -66,18 +68,30 @@ class _MyConverterState extends State<MyConverter> {
     );
   }
 
-  Padding getResultTextField(String label, TextEditingController controller) {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: label,
-          filled: true,
-          border: const OutlineInputBorder(),
+  Widget getResultTextField(String label, TextEditingController controller) {
+    return Row(
+      children: [
+        SizedBox(
+          width: _sizeX * 0.75,
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: TextField(
+              maxLines: null,
+              decoration: InputDecoration(
+                labelText: label,
+                filled: true,
+                border: const OutlineInputBorder(),
+              ),
+              readOnly: true,
+              controller: controller,
+            ),
+          ),
         ),
-        readOnly: true,
-        controller: controller,
-      ),
+        OutlinedButton(
+          onPressed: () {},
+          child: const Icon(Icons.copy),
+        ),
+      ],
     );
   }
 
