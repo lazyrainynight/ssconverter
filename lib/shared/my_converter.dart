@@ -69,10 +69,24 @@ class _MyConverterState extends State<MyConverter> {
   }
 
   Widget getResultTextField(String label, TextEditingController controller) {
+    final ButtonStyle buttonStyle = OutlinedButton.styleFrom(
+      primary: Colors.amber,
+      minimumSize: const Size(100, 55),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+    );
+
     return Row(
       children: [
+        OutlinedButton(
+          onPressed: () {},
+          style: buttonStyle,
+          child: const Icon(Icons.copy),
+        ),
         SizedBox(
-          width: _sizeX * 0.75,
+          width: _sizeX - 200,
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: TextField(
@@ -86,10 +100,6 @@ class _MyConverterState extends State<MyConverter> {
               controller: controller,
             ),
           ),
-        ),
-        OutlinedButton(
-          onPressed: () {},
-          child: const Icon(Icons.copy),
         ),
       ],
     );
