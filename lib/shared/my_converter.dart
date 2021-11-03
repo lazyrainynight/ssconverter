@@ -19,8 +19,17 @@ class _MyConverterState extends State<MyConverter> {
   final TextEditingController doubleUrlEn = TextEditingController();
   final TextEditingController doubleUrlDe = TextEditingController();
 
+  bool base64EnError = false;
+  bool base64DeError = false;
+  bool base64UrlEnError = false;
+  bool base64UrlDeError = false;
+  bool urlEnError = false;
+  bool urlDeError = false;
+  bool doubleUrlEnError = false;
+  bool doubleUrlDeError = false;
+
   String inputHint = 'CONVERT THIS';
-  String invalidInput = 'INVALID INPUT';
+  String invalidInput = 'INVALID INPUT for this conversion';
 
   double _sizeX = 500;
 
@@ -43,6 +52,7 @@ class _MyConverterState extends State<MyConverter> {
             ),
             onChanged: (t) {
               setState(() {
+                disableErrors();
                 base64En.text = getBase64Encoding(t);
                 base64De.text = getBase64Decoding(t);
                 base64UrlEn.text = getBase64UrlEncoding(t);
@@ -55,20 +65,23 @@ class _MyConverterState extends State<MyConverter> {
             },
           ),
           const SizedBox(height: 30),
-          getResultBox('Base64 Encoding', base64En),
-          getResultBox('Base64 Decoding', base64De),
-          getResultBox('Base64Url Encoding', base64UrlEn),
-          getResultBox('Base64Url Decoding', base64UrlDe),
-          getResultBox('Url Encoding (UTF-8)', urlEn),
-          getResultBox('Url Decoding (UTF-8)', urlDe),
-          getResultBox('Double-Url Encoding (UTF-8)', doubleUrlEn),
-          getResultBox('Double-Url Decoding (UTF-8)', doubleUrlDe),
+          getResultBox('Base64 Encoding', base64En, base64EnError),
+          getResultBox('Base64 Decoding', base64De, base64DeError),
+          getResultBox('Base64Url Encoding', base64UrlEn, base64UrlEnError),
+          getResultBox('Base64Url Decoding', base64UrlDe, base64UrlDeError),
+          getResultBox('Url Encoding (UTF-8)', urlEn, urlEnError),
+          getResultBox('Url Decoding (UTF-8)', urlDe, urlDeError),
+          getResultBox(
+              'Double-Url Encoding (UTF-8)', doubleUrlEn, doubleUrlEnError),
+          getResultBox(
+              'Double-Url Decoding (UTF-8)', doubleUrlDe, doubleUrlDeError),
         ],
       ),
     );
   }
 
-  Widget getResultBox(String label, TextEditingController controller) {
+  Widget getResultBox(
+      String label, TextEditingController controller, bool error) {
     final ButtonStyle buttonStyle = OutlinedButton.styleFrom(
       primary: Colors.amber,
       minimumSize: const Size(100, 55),
@@ -94,7 +107,9 @@ class _MyConverterState extends State<MyConverter> {
               decoration: InputDecoration(
                 labelText: label,
                 filled: true,
-                fillColor: const Color.fromARGB(255, 72, 72, 72),
+                fillColor: error
+                    ? const Color.fromARGB(255, 172, 72, 72)
+                    : const Color.fromARGB(255, 72, 72, 72),
                 border: const OutlineInputBorder(),
               ),
               readOnly: true,
@@ -116,8 +131,10 @@ class _MyConverterState extends State<MyConverter> {
     try {
       return utf8.decode(base64Decode(source));
     } on ArgumentError {
+      base64DeError = true;
       return invalidInput;
     } on FormatException {
+      base64DeError = true;
       return invalidInput;
     }
   }
@@ -132,8 +149,10 @@ class _MyConverterState extends State<MyConverter> {
     try {
       return utf8.decode(base64Url.decode(source));
     } on ArgumentError {
+      base64UrlDeError = true;
       return invalidInput;
     } on FormatException {
+      base64UrlDeError = true;
       return invalidInput;
     }
   }
@@ -146,8 +165,10 @@ class _MyConverterState extends State<MyConverter> {
     try {
       return Uri.decodeFull(input);
     } on ArgumentError {
+      urlDeError = true;
       return invalidInput;
     } on FormatException {
+      urlDeError = true;
       return invalidInput;
     }
   }
@@ -160,13 +181,26 @@ class _MyConverterState extends State<MyConverter> {
     try {
       return Uri.decodeFull(Uri.decodeFull(input));
     } on ArgumentError {
+      doubleUrlDeError = true;
       return invalidInput;
     } on FormatException {
+      doubleUrlDeError = true;
       return invalidInput;
     }
   }
 
   String getInputWithPadding(String input) {
     return input + ('=' * ((4 - (input.length % 4)) % 4));
+  }
+
+  void disableErrors() {
+    base64EnError = false;
+    base64DeError = false;
+    base64UrlEnError = false;
+    base64UrlDeError = false;
+    urlEnError = false;
+    urlDeError = false;
+    doubleUrlEnError = false;
+    doubleUrlDeError = false;
   }
 }
