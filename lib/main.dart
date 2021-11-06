@@ -14,8 +14,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool light = true;
-  bool dark = false;
+  final bool light = true;
+  final bool dark = false;
+
+  final Color cursorColor = Colors.amberAccent;
+  final Color selectionColor = Colors.deepOrangeAccent;
+  final Color selectionHandleColor = Colors.lightGreen;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +30,11 @@ class _MyAppState extends State<MyApp> {
         primaryColor: Colors.amber,
         primarySwatch: Colors.blueGrey,
         accentColor: Colors.amber,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: cursorColor,
+          selectionColor: selectionColor,
+          selectionHandleColor: selectionHandleColor,
+        ),
         textTheme: const TextTheme(
           bodyText1: TextStyle(fontSize: 24),
           bodyText2: TextStyle(fontSize: 22),
