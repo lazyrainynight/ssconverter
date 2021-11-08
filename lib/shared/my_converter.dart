@@ -51,6 +51,9 @@ class _MyConverterState extends State<MyConverter> {
               filled: true,
               border: const OutlineInputBorder(),
             ),
+            onTap: () {
+              txtValue.selection = TextSelection(baseOffset: 0, extentOffset: txtValue.value.text.length);
+            },
             onChanged: (t) {
               setState(() {
                 disableErrors();
@@ -97,6 +100,8 @@ class _MyConverterState extends State<MyConverter> {
         OutlinedButton(
           onPressed: error ? null : () {
             Clipboard.setData(ClipboardData(text: controller.text));
+            // todo: unselect all text fields
+            controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.value.text.length);
           },
           style: buttonStyle,
           child: const Icon(Icons.copy),
@@ -121,6 +126,9 @@ class _MyConverterState extends State<MyConverter> {
               ),
               readOnly: true,
               controller: controller,
+              onTap: () {
+                controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.value.text.length);
+              },
             ),
           ),
         ),
