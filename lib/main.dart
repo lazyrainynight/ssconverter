@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ssconverter/screens/about_screen.dart';
 import 'package:ssconverter/screens/my_home_page.dart';
+import 'package:ssconverter/shared/SystemConsts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SS Converter',
+      title: 'SS Converter v${SystemConsts.version}',
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.amber,
