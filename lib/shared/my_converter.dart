@@ -20,6 +20,8 @@ class _MyConverterState extends State<MyConverter> {
   final TextEditingController doubleUrlEn = TextEditingController();
   final TextEditingController doubleUrlDe = TextEditingController();
 
+  late List<TextEditingController> controllers;
+
   bool base64EnError = false;
   bool base64DeError = false;
   bool base64UrlEnError = false;
@@ -33,6 +35,12 @@ class _MyConverterState extends State<MyConverter> {
   String invalidInput = 'INVALID INPUT for this conversion';
 
   double _sizeX = 500;
+
+  @override
+  void initState() {
+    super.initState();
+    controllers = [base64En, base64De, base64UrlEn, base64UrlDe, urlEn, urlDe, doubleUrlEn, doubleUrlDe];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +108,7 @@ class _MyConverterState extends State<MyConverter> {
         OutlinedButton(
           onPressed: error ? null : () {
             Clipboard.setData(ClipboardData(text: controller.text));
-            // todo: unselect all text fields
+            clearSelection();
             controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.value.text.length);
           },
           style: buttonStyle,
@@ -127,6 +135,7 @@ class _MyConverterState extends State<MyConverter> {
               readOnly: true,
               controller: controller,
               onTap: () {
+                clearSelection();
                 controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.value.text.length);
               },
             ),
@@ -217,5 +226,11 @@ class _MyConverterState extends State<MyConverter> {
     urlDeError = false;
     doubleUrlEnError = false;
     doubleUrlDeError = false;
+  }
+
+  clearSelection() {
+    for (var c in controllers) {
+      c.selection = const TextSelection(baseOffset: 0, extentOffset: 0);
+    }
   }
 }
