@@ -60,6 +60,7 @@ class _MyConverterState extends State<MyConverter> {
               border: const OutlineInputBorder(),
             ),
             onTap: () {
+              clearSelection();
               txtValue.selection = TextSelection(baseOffset: 0, extentOffset: txtValue.value.text.length);
             },
             onChanged: (t) {
