@@ -18,15 +18,6 @@ root = true
 
 
 [*.*]
-
-indent_style = space
-indent_size = 4
-trim_trailing_whitespace = true
-insert_final_newline = true
-
-
-[*.py]
-
 indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
@@ -34,8 +25,17 @@ insert_final_newline = true
 max_line_length = 240
 
 
-[*.ts]
 
+[*.py]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 240
+
+
+
+[*.ts]
 indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
@@ -44,7 +44,6 @@ insert_final_newline = true
 
 
 [*.json]
-
 indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
@@ -53,7 +52,6 @@ insert_final_newline = true
 
 
 [*.html]
-
 indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
@@ -62,7 +60,6 @@ insert_final_newline = true
 
 
 [*.xml]
-
 indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
@@ -70,8 +67,22 @@ insert_final_newline = true
 
 
 
-[*.cs]
+[*.md]
+max_line_length = off
 
+
+
+[*.yml]
+indent_size = 4
+
+
+
+[*.yaml]
+indent_size = 4
+
+
+
+[*.cs]
 #######################################################################################
 #### Core EditorConfig properties - https://editorconfig.org/#supported-properties ####
 #######################################################################################
@@ -381,6 +392,7 @@ resharper_int_align_switch_sections = false
 #### ReSharper - Line Breaks - https://www.jetbrains.com/help/resharper/EditorConfig_CSHARP_LineBreaksPageSchema.html ####
 ##########################################################################################################################
 
+resharper_csharp_insert_final_newline = true
 resharper_keep_user_linebreaks = true
 resharper_keep_existing_arrangement = false
 resharper_keep_existing_linebreaks = false
@@ -578,6 +590,3 @@ resharper_space_after_operator_keyword = false
 #########################################################################################################################
 #### ReSharper - Code Inspections - https://www.jetbrains.com/help/resharper/Reference__Code_Inspections_CSHARP.html ####
 #########################################################################################################################
-
-
-
